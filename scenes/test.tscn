@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://bqcffui3l0r1h"]
+
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_Player.gd" id="1_rkw1c"]
+[ext_resource type="Script" path="res://KFPS-classes/scenes/KFPS_PlayerShape.gd" id="3_83bpo"]
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_PlayerCamera.gd" id="3_f7usv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubepo"]
+
+[sub_resource type="Gradient" id="Gradient_1agl7"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_b7lqf"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w3nfw"]
+seamless = true
+color_ramp = SubResource("Gradient_1agl7")
+noise = SubResource("FastNoiseLite_b7lqf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_debpk"]
+albedo_texture = SubResource("NoiseTexture2D_w3nfw")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1u1to"]
+albedo_texture = SubResource("NoiseTexture2D_w3nfw")
+uv1_triplanar = true
+
+[node name="test" type="Node3D"]
+
+[node name="KFPS_Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.6004, 0)
+script = ExtResource("1_rkw1c")
+acceleration = 15.0
+
+[node name="KFPS_PlayerCamera" type="Camera3D" parent="KFPS_Player"]
+transform = Transform3D(1, 0, 0, 0, 0.548746, 0.835989, 0, -0.835989, 0.548746, 0, 0.688374, 0)
+script = ExtResource("3_f7usv")
+use_mouselook = true
+use_sticklook = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KFPS_Player"]
+shape = SubResource("CapsuleShape3D_ubepo")
+script = ExtResource("3_83bpo")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.519222, 0)
+use_collision = true
+size = Vector3(88.7822, 9.86141, 145.437)
+material = SubResource("StandardMaterial3D_debpk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.224985, 0.482692, -0.0387189)
+operation = 2
+use_collision = true
+size = Vector3(85.7629, 9.62954, 143.026)
+material = SubResource("StandardMaterial3D_1u1to")

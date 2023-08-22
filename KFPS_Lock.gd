@@ -1,11 +1,5 @@
-extends Node
+#By Kyra Gordon as part of KFPS
 
+extends KFPS_EffectBox
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+class_name KFPS_Lock

@@ -1,5 +1,5 @@
-#V1.0
-#By Kyra Gordon on 17/08/23
+#By Kyra Gordon as part of KFPS
+
 extends Node
 
 class_name KFPS_Health
@@ -30,15 +30,15 @@ func get_health_percent() -> float:
 	return 1.0 - damage/max_health
 
 ##Damage function. Use inverse damage to heal
-func do_damage(quantity:float, damage_flags:PackedStringArray = []):
+func do_damage(quantity:float, damage_flags:KFPS_DamageFlags):
 	#cache the keys from our flag dictionary for comparison
-	var flags_list = flags.keys()
+#	var flags_list = flags.keys()
 	#for all of our damage event's flags
-	for i in damage_flags:
-		#if the flag is listed in this health node
-		if flags_list.has(i):
-			#apply the multiplier to our quantity
-			quantity *= flags[i]
+#	for i in damage_flags:
+#		#if the flag is listed in this health node
+#		if flags_list.has(i):
+#			#apply the multiplier to our quantity
+#			quantity *= flags[i]
 	#if damage value is positive- not healing
 	if quantity>0:
 		#emit our damage signal

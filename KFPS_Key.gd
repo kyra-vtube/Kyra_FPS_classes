@@ -1,11 +1,18 @@
-extends Node
+#By Kyra Gordon as part of KFPS
 
+extends KFPS_EffectBox
 
-# Called when the node enters the scene tree for the first time.
+class_name KFPS_Key
+
+@export var lock:KFPS_Lock
+
 func _ready():
-	pass # Replace with function body.
+	connect("effect", collect_key)
+	monitoring = false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func collect_key(list:Array):
+	for i in list:
+		if i.is_in_group("player"):
+			monitorable = false
+			hide()
+			reparent(i.inventory)

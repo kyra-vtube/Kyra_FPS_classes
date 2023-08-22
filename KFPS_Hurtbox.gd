@@ -1,11 +1,11 @@
-extends Node
+#By Kyra Gordon as part of KFPS
 
+extends KFPS_EffectBox
 
-# Called when the node enters the scene tree for the first time.
+##Collider that senses hitboxes and sends relevant data to a linked KFPS_Health node
+class_name KFPS_Hurtbox
+
+@export var health:KFPS_Health
+
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	add_to_group("hurtbox")

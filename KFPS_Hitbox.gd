@@ -1,11 +1,21 @@
-extends Node
+#By Kyra Gordon as part of KFPS
 
+extends KFPS_EffectBox
 
-# Called when the node enters the scene tree for the first time.
+class_name KFPS_Hitbox
+
+@export_enum("NONE","MANUAL","CONTACT","TIMER") var DESTROY_CONDITION = 0
+
+@export var damage:float = 1
+
+@export var damage_flags:PackedStringArray = []
+
 func _ready():
-	pass # Replace with function body.
+	connect("effect", hit)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func hit(list:Array):
+	for i in list:
+		if i.is_in_group("hurtbox"):
+			i.health.do_damage(damage,damage_flags)
+		elif i.has_method("do_damage"):
+			i.do_damage(damage, damage_flags)

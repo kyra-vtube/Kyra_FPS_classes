@@ -1,18 +1,22 @@
-#V1.0
-#By Kyra Gordon on 20/08/23
+#By Kyra Gordon as part of KFPS
 extends CharacterBody3D
 
 ##The base class for NPCs and any other object that moves around the environment
 class_name KFPS_Actor
 
+const FLAT:Vector3 = Vector3(1,0,1)
+
+##Useless position we can use as a placeholder
+const SILLY:Vector3 = Vector3(INF,INF,INF)
+
 ##The direction the actor aims to go in, in global space
 var target_direction:Vector3
 
 ##If the actor is trying to jump
-var jump_requested:bool = false
+var jumping:bool = false
 
 ##If the actor is trying to crouch
-var crouch:bool = false
+var crouching:bool = false
  
 ##If the actor is trying to slide
 var slide_direction:Vector3
@@ -21,10 +25,7 @@ var slide_direction:Vector3
 var nav:NavigationAgent3D
 
 ##The navigation goal of this actor
-var navigation_goal:Vector3
-
-##A value between 0 and 1 representing the progress towards top speed, for acceleration curve sampling
-var moving_amount:float
+var navigation_goal:Vector3 = SILLY
 
 ##A list of velocity impulses to be added to this actor on the coming _physics_process() call
 var velocity_buffer:PackedVector3Array = []
@@ -32,22 +33,14 @@ var velocity_buffer:PackedVector3Array = []
 ##Stores whether navigation was succesful. For use in AI.
 var navigation_succesful:bool
 
-const FLAT:Vector3 = Vector3(1,0,1)
-
-##Useless position we can use as a placeholder
-const SILLY:Vector3 = Vector3(INF,INF,INF)
-
 ##The maximum speed we're going to move at on the ground while walking
-@export var top_speed:float = 5
+@export var top_speed:float = 10
 
 ##How fast to slide relative to our top speed
 @export var slide_speed_multiplier:float = 1.3
 
 ##Overall acceleration rate
 @export var acceleration:float = 5
-
-##This curve allows for more detailed tweaks to the charaacter's acceleration characteristics
-@export var acceleration_curve:Curve = load("res://KFPS-classes/placeholder resources/actor movement acceleration curve.tres")
 
 ##The magnitude that velocity is set to when jumping
 @export var jump_impulse:float = 10.0
@@ -60,6 +53,7 @@ func _ready():
 	add_child(nav)
 
 func _physics_process(delta):
+	get_collision_state()
 	navigation_succesful = navigate()
 	manage_velocity(delta)
 	jump()
@@ -68,14 +62,9 @@ func _physics_process(delta):
 
 ##Converts local target direction into velocity, handles acceleration and gravity
 func manage_velocity(delta):
-	if !target_direction.is_zero_approx():
-		moving_amount = lerp( 0.0, 1.0, delta/(top_speed/acceleration) )
-	else:
-		moving_amount = 1.0
-	var value = acceleration_curve.sample(moving_amount)
 	var y = velocity.y
-	velocity = velocity.lerp(target_direction * top_speed, value)
-	velocity.y = y - (PhysicsServer3D.AREA_PARAM_GRAVITY*delta)
+	velocity = velocity.move_toward(target_direction * top_speed, delta*acceleration)
+	velocity.y = y - (9.8*delta)
 	for i in velocity_buffer:
 		velocity+=i
 
@@ -89,23 +78,23 @@ func apply_impulse(impulse:Vector3, position:Vector3 = Vector3()):
 
 ##Handles jumping off of any solid surfaces
 func jump():
-	if jump_requested:
-		crouch = false
+	if jumping:
 		var jump_direction:Vector3
 		if is_on_floor():
 			jump_direction += Vector3.UP
-		if is_on_wall() and target_direction.dot( get_wall_normal() ) > 0:
+		if is_on_wall() and target_direction.dot( get_wall_normal() ) and crouching:
 			jump_direction += get_wall_normal()
-		if is_on_ceiling():
+		if is_on_ceiling() and crouching:
 			jump_direction += Vector3.DOWN
 		velocity += jump_direction.normalized() * jump_impulse
 		slide_direction = Vector3()
-	jump_requested = false
+		crouching = false
+	jumping = false
 
 ##Handles sliding along the ground
 func slide(delta):
 	#Check if we're crouching and on the floor and moving
-	if crouch and is_on_floor() and !target_direction.is_zero_approx():
+	if crouching and is_on_floor() and !target_direction.is_zero_approx():
 		#If ther isn't already a valid slide vector, make one from the direction we're holding.
 		if slide_direction.is_zero_approx():
 			slide_direction = target_direction
@@ -119,7 +108,7 @@ func slide(delta):
 	#If our check for the slide condition fails, then break out of the slide state
 	else:
 		slide_direction = Vector3()
-	slide_direction = slide_direction.lerp(Vector3(),delta*acceleration)
+	slide_direction = slide_direction.lerp(Vector3(),delta)
 
 ##validates the is_on_floor, is_on_wall and is_on_ceiling functions and their associated angle functions, for jumping and sliding
 func get_collision_state():

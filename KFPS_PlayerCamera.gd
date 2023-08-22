@@ -1,5 +1,5 @@
-#V1.0
-#By Kyra Gordon on 17/08/23
+#By Kyra Gordon as part of KFPS
+
 extends Camera3D
 
 class_name KFPS_PlayerCamera
@@ -50,7 +50,7 @@ func control_look(delta):
 
 ##Returns the vector of the joypad inputs bound to "look down", "look up", "look left" and "look right"
 func get_stick_vector()->Vector2:
-	return Input.get_vector("look down", "look up", "look left", "look right") * stick_sensitivity * float(use_sticklook)
+	return Input.get_vector("look right", "look left", "look down", "look up") * stick_sensitivity * float(use_sticklook)
 
 ##Returns the vector reported by the gyroscope
 func get_gyro_vector()->Vector2:
@@ -75,7 +75,7 @@ func select_hand_item(index:int):
 	get_active_item().show()
 
 ##Removes the item at the given index
-func discard_hand_item(index:int):
+func discard_hand_item():
 	get_active_item().discard()
 
 ##Uses the active item
