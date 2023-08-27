@@ -21,6 +21,8 @@ var crouching:bool = false
 ##If the actor is trying to slide
 var slide_direction:Vector3
 
+var can_slide:bool = true
+
 ##The navigationAgent3D for this actor
 var nav:NavigationAgent3D
 
@@ -96,7 +98,8 @@ func slide(delta):
 	#Check if we're crouching and on the floor and moving
 	if crouching and is_on_floor() and !target_direction.is_zero_approx():
 		#If ther isn't already a valid slide vector, make one from the direction we're holding.
-		if slide_direction.is_zero_approx():
+		if slide_direction.is_zero_approx() and can_slide:
+			can_slide = false
 			slide_direction = target_direction
 		#otherwise construct it from our stats and apply that to our velocity
 		else:
@@ -109,6 +112,8 @@ func slide(delta):
 	else:
 		slide_direction = Vector3()
 	slide_direction = slide_direction.lerp(Vector3(),delta)
+	if Input.is_action_just_released("crouch"):
+		can_slide = true
 
 ##validates the is_on_floor, is_on_wall and is_on_ceiling functions and their associated angle functions, for jumping and sliding
 func get_collision_state():
