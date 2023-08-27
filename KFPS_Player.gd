@@ -19,6 +19,8 @@ func _physics_process(delta):
 	manage_velocity(delta)
 	jump()
 	slide(delta)
+	if Input.is_action_just_released("crouch"):
+		can_slide = true
 	move_and_slide()
 
 func collect_input():

@@ -112,8 +112,6 @@ func slide(delta):
 	else:
 		slide_direction = Vector3()
 	slide_direction = slide_direction.lerp(Vector3(),delta)
-	if Input.is_action_just_released("crouch"):
-		can_slide = true
 
 ##validates the is_on_floor, is_on_wall and is_on_ceiling functions and their associated angle functions, for jumping and sliding
 func get_collision_state():
