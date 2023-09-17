@@ -5,11 +5,30 @@ extends Node
 ##Stores items such as keys and other consumables
 class_name KFPS_CharacterInventory
 
-func add_item(item:Node):
-	pass
+##Currently selected item
+var item_index:int = 0
 
-func remove_item(item:Node):
-	pass
+func add_item(item:KFPS_Item):
+	if !item.is_inside_tree():
+		add_child(item)
+	else:
+		item.reparent(self, false)
 
-func give_item(item:Node, recipient:KFPS_CharacterInventory):
-	pass
+func remove_item(item:KFPS_Item):
+	item.queue_free()
+
+func give_item(item:KFPS_Item, recipient:KFPS_CharacterInventory):
+	item.reparent(recipient)
+
+func get_item_names():
+	var list:PackedStringArray = []
+	for i in get_children():
+		list.append(i.name)
+	return list
+
+func change_index(offset:int):
+	item_index = wrapi(item_index+offset, 0, get_child_count() - 1)
+
+func use_current_item():
+	if get_child_count() >= item_index:
+		get_children()[item_index].use()
