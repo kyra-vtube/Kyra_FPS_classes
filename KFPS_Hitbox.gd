@@ -4,8 +4,6 @@ extends KFPS_EffectBox
 
 class_name KFPS_Hitbox
 
-@export_enum("NONE","MANUAL","CONTACT","TIMER") var DESTROY_CONDITION = 0
-
 @export var damage:float = 1
 
 @export var damage_flags:PackedStringArray = []
