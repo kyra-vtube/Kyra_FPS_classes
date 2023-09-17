@@ -17,34 +17,25 @@ class_name KFPS_Health
 @export var overlimit_enabled:bool = false
 
 ##Emitted when on_damage is called with a positive damage value
-signal on_damage(flags:PackedStringArray)
+signal on_damage(quantity:float)
 
 ##Emitted when on_damage is called with a negative damage value
-signal on_heal
+signal on_heal(quantity:float)
 
 ##Emitted when damage == max health
-signal on_destroyed(flags:PackedStringArray)
+signal on_destroyed(quantity:float)
 
 ##Returns the current health level as a percent. Intended for health bars
 func get_health_percent() -> float:
 	return 1.0 - damage/max_health
 
 ##Damage function. Use inverse damage to heal
-func do_damage(quantity:float, damage_flags:KFPS_DamageFlags):
-	#cache the keys from our flag dictionary for comparison
-#	var flags_list = flags.keys()
-	#for all of our damage event's flags
-#	for i in damage_flags:
-#		#if the flag is listed in this health node
-#		if flags_list.has(i):
-#			#apply the multiplier to our quantity
-#			quantity *= flags[i]
-	#if damage value is positive- not healing
+func do_damage(quantity:float):
 	if quantity>0:
 		#emit our damage signal
-		emit_signal("on_damage", damage_flags)
+		emit_signal("on_damage",quantity)
 	else:
-		emit_signal("on_heal")
+		emit_signal("on_heal",quantity)
 	#apply the processed quantity to our damage value
 	damage+=quantity
 	#if ocerlimit isn't allowed
@@ -53,4 +44,4 @@ func do_damage(quantity:float, damage_flags:KFPS_DamageFlags):
 		damage = clamp(damage, 0.0, max_health)
 	#check if the destroyed condition is met
 	if damage>=max_health:
-		emit_signal("on_destroyed",damage_flags)
+		emit_signal("on_destroyed",quantity)
