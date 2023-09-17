@@ -9,6 +9,8 @@ const FLAT:Vector3 = Vector3(1,0,1)
 ##Useless position we can use as a placeholder
 const SILLY:Vector3 = Vector3(INF,INF,INF)
 
+var gravity:float = 9.8
+
 ##The direction the actor aims to go in, in global space
 var target_direction:Vector3
 
@@ -17,11 +19,6 @@ var jumping:bool = false
 
 ##If the actor is trying to crouch
 var crouching:bool = false
- 
-##If the actor is trying to slide
-var slide_direction:Vector3
-
-var can_slide:bool = true
 
 ##The navigationAgent3D for this actor
 var nav:NavigationAgent3D
@@ -42,13 +39,15 @@ var navigation_succesful:bool
 @export var slide_speed_multiplier:float = 1.3
 
 ##Overall acceleration rate
-@export var acceleration:float = 5
+@export var acceleration:float = 5.0
 
 ##The magnitude that velocity is set to when jumping
 @export var jump_impulse:float = 10.0
 
 ##Whether the actor will try to reach unreachable areas
 @export var navigate_toward_unreachable_area:bool = false 
+
+@export var walljump_enabled:bool = false
 
 func _ready():
 	nav = NavigationAgent3D.new()
@@ -59,14 +58,13 @@ func _physics_process(delta):
 	navigation_succesful = navigate()
 	manage_velocity(delta)
 	jump()
-	slide(delta)
 	move_and_slide()
 
 ##Converts local target direction into velocity, handles acceleration and gravity
 func manage_velocity(delta):
 	var y = velocity.y
 	velocity = velocity.move_toward(target_direction * top_speed, delta*acceleration)
-	velocity.y = y - (9.8*delta)
+	velocity.y = y - (gravity*delta)
 	for i in velocity_buffer:
 		velocity+=i
 
@@ -75,43 +73,22 @@ func apply_central_impulse(impulse:Vector3):
 	velocity_buffer.append( impulse )
 
 ##Alias for apply central impulse
-func apply_impulse(impulse:Vector3, position:Vector3 = Vector3()):
+func apply_impulse(impulse:Vector3, _position:Vector3 = Vector3()):
 	apply_central_impulse(impulse)
 
 ##Handles jumping off of any solid surfaces
 func jump():
 	if jumping:
-		var jump_direction:Vector3
+		var jump_direction:Vector3 = Vector3.ZERO
 		if is_on_floor():
 			jump_direction += Vector3.UP
-		if is_on_wall() and target_direction.dot( get_wall_normal() ) and crouching:
-			jump_direction += get_wall_normal()
-		if is_on_ceiling() and crouching:
-			jump_direction += Vector3.DOWN
+		if walljump_enabled:
+			if is_on_wall() and target_direction.dot( get_wall_normal() ) < 0 and crouching:
+				jump_direction += get_wall_normal()
+			if is_on_ceiling() and crouching:
+				jump_direction += Vector3.DOWN
 		velocity += jump_direction.normalized() * jump_impulse
-		slide_direction = Vector3()
-		crouching = false
 	jumping = false
-
-##Handles sliding along the ground
-func slide(delta):
-	#Check if we're crouching and on the floor and moving
-	if crouching and is_on_floor() and !target_direction.is_zero_approx():
-		#If ther isn't already a valid slide vector, make one from the direction we're holding.
-		if slide_direction.is_zero_approx() and can_slide:
-			can_slide = false
-			slide_direction = target_direction
-		#otherwise construct it from our stats and apply that to our velocity
-		else:
-			#Inputting a different direction cancels the slide
-			if target_direction.dot( slide_direction )>0:
-				velocity = slide_direction * top_speed * slide_speed_multiplier
-			else:
-				slide_direction = Vector3()
-	#If our check for the slide condition fails, then break out of the slide state
-	else:
-		slide_direction = Vector3()
-	slide_direction = slide_direction.lerp(Vector3(),delta)
 
 ##validates the is_on_floor, is_on_wall and is_on_ceiling functions and their associated angle functions, for jumping and sliding
 func get_collision_state():
