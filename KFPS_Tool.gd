@@ -2,12 +2,13 @@ extends Node3D
 
 class_name KFPS_Tool
 
-signal on_discard
+var using:bool = false
 
-signal on_use
+var using_secondary:bool = false
 
-func discard():
-	emit_signal("on_discard")
+var discarding:bool = false
 
-func use():
-	emit_signal("on_use")
+func _input(event):
+	using = Input.is_action_pressed("use tool primary")
+	using_secondary = Input.is_action_pressed("use tool secondary")
+	discarding = Input.is_action_pressed("discard tool")
