@@ -4,9 +4,9 @@ extends Camera3D
 
 class_name KFPS_PlayerCamera
 
-@export var use_mouselook:bool = false
+@export var use_mouselook:bool = true
 
-@export var use_sticklook:bool = false
+@export var use_sticklook:bool = true
 
 @export var use_gyrolook:bool = false
 
@@ -22,14 +22,14 @@ class_name KFPS_PlayerCamera
 
 @export var gyro_sensitivity:float = 0.1
 
-@export var max_hand_item_slots:int = 4
+@export var max_tool_slots:int = 4
 
-var active_item = 0
+var active_tool = 0
 
-var inventory:Node3D = Node3D.new()
+var belt:Node3D = Node3D.new()
 
 func _ready():
-	add_child(inventory)
+	add_child(belt)
 
 ##The _input function is used to collect the relative mouse movement
 func _input(event):
@@ -38,7 +38,8 @@ func _input(event):
 
 ##The player camera is rotated every frame to keep the motion looking as smooth as possible
 func _process(delta):
-	control_look(delta)
+	if !get_tree().paused:
+		control_look(delta)
 
 ##control_look combines data from the joypad, gyroscope and mouse to rotate the camera and the player node
 func control_look(delta):
@@ -58,26 +59,28 @@ func get_gyro_vector()->Vector2:
 	return Vector2(g.x,g.y) * gyro_sensitivity * float(use_gyrolook)
 
 ##Called when a gun or similar item is picked up
-func add_hand_item(item:Node3D):
-	pass
+func add_tool(tool:KFPS_Tool):
+	if belt.get_child_count() < max_tool_slots:
+		belt.add_child(tool)
 
-func get_inventory():
-	return inventory.get_children()
+func get_tools():
+	return belt.get_children()
 
-func get_active_item():
-	return get_inventory()[active_item]
+func get_active_tool():
+	return get_tools()[active_tool]
 
 ##Selects the item in the weapon list at the given index
-func select_hand_item(index:int):
-	active_item = index
-	for i in get_inventory():
+func select_tool(index:int):
+	active_tool = index
+	for i in get_tools():
 		i.hide()
-	get_active_item().show()
+	get_active_tool().show()
 
 ##Removes the item at the given index
-func discard_hand_item():
-	get_active_item().discard()
+func discard_tool():
+	get_active_tool().discard()
 
-##Uses the active item
-func use_hand_item():
-	get_active_item().use()
+func show_active_tool():
+	for i in belt.get_children():
+		i.hide()
+	get_active_tool().show()
