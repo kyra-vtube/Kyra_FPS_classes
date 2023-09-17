@@ -1,55 +1,78 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqcffui3l0r1h"]
+[gd_scene load_steps=8 format=3 uid="uid://bqcffui3l0r1h"]
 
+[ext_resource type="Script" path="res://KFPS-classes/scenes/test.gd" id="1_dshrd"]
 [ext_resource type="Script" path="res://KFPS-classes/KFPS_Player.gd" id="1_rkw1c"]
-[ext_resource type="Script" path="res://KFPS-classes/scenes/KFPS_PlayerShape.gd" id="3_83bpo"]
-[ext_resource type="Script" path="res://KFPS-classes/KFPS_PlayerCamera.gd" id="3_f7usv"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubepo"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_p1ylm"]
+size = Vector3(100, 1, 100)
 
-[sub_resource type="Gradient" id="Gradient_1agl7"]
-colors = PackedColorArray(0, 0, 0, 1, 0, 1, 1, 1)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hfx7w"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_b7lqf"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xr221"]
+noise = SubResource("FastNoiseLite_hfx7w")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w3nfw"]
-seamless = true
-color_ramp = SubResource("Gradient_1agl7")
-noise = SubResource("FastNoiseLite_b7lqf")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_debpk"]
-albedo_texture = SubResource("NoiseTexture2D_w3nfw")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t0hx3"]
+albedo_texture = SubResource("NoiseTexture2D_xr221")
 uv1_triplanar = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1u1to"]
-albedo_texture = SubResource("NoiseTexture2D_w3nfw")
-uv1_triplanar = true
+[sub_resource type="BoxMesh" id="BoxMesh_a3js4"]
+material = SubResource("StandardMaterial3D_t0hx3")
+size = Vector3(100, 1, 100)
 
 [node name="test" type="Node3D"]
+script = ExtResource("1_dshrd")
 
 [node name="KFPS_Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20.6004, 0)
 script = ExtResource("1_rkw1c")
-acceleration = 15.0
+walljump_enabled = true
 
-[node name="KFPS_PlayerCamera" type="Camera3D" parent="KFPS_Player"]
-transform = Transform3D(1, 0, 0, 0, 0.548746, 0.835989, 0, -0.835989, 0.548746, 0, 0.688374, 0)
-script = ExtResource("3_f7usv")
-use_mouselook = true
-use_sticklook = true
+[node name="Node3D" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="KFPS_Player"]
-shape = SubResource("CapsuleShape3D_ubepo")
-script = ExtResource("3_83bpo")
+[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.519222, 0)
-use_collision = true
-size = Vector3(88.7822, 9.86141, 145.437)
-material = SubResource("StandardMaterial3D_debpk")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_p1ylm")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.224985, 0.482692, -0.0387189)
-operation = 2
-use_collision = true
-size = Vector3(85.7629, 9.62954, 143.026)
-material = SubResource("StandardMaterial3D_1u1to")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D"]
+mesh = SubResource("BoxMesh_a3js4")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -43.1335, 50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D2"]
+shape = SubResource("BoxShape3D_p1ylm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D2"]
+mesh = SubResource("BoxMesh_a3js4")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -43.1335, -50)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D3"]
+shape = SubResource("BoxShape3D_p1ylm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D3"]
+mesh = SubResource("BoxMesh_a3js4")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, -50, -43.1335, -2.18557e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D4"]
+shape = SubResource("BoxShape3D_p1ylm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D4"]
+mesh = SubResource("BoxMesh_a3js4")
+
+[node name="StaticBody3D5" type="StaticBody3D" parent="Node3D"]
+transform = Transform3D(-4.37114e-08, -1, 4.37114e-08, 0, -4.37114e-08, -1, 1, -4.37114e-08, 1.91069e-15, 50, -43.1335, 2.18557e-06)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBody3D5"]
+shape = SubResource("BoxShape3D_p1ylm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/StaticBody3D5"]
+mesh = SubResource("BoxMesh_a3js4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D"]
+transform = Transform3D(0.132983, -0.560249, 0.81758, 0, 0.824906, 0.565269, -0.991118, -0.0751712, 0.109699, 0, 7.74096, 0.891776)
+shadow_enabled = true
