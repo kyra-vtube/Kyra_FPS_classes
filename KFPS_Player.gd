@@ -8,20 +8,19 @@ signal death
 
 @export var toggle_crouch:bool = false
 
-var inventory:KFPS_CharacterInventory = KFPS_CharacterInventory.new()
-
 var shape:KFPS_PlayerShape = KFPS_PlayerShape.new()
 
 var camera:KFPS_PlayerCamera = KFPS_PlayerCamera.new()
 
 var pause:KFPS_Pause = KFPS_Pause.new()
 
-var health:KFPS_Health = KFPS_Health.new()
-
 func _ready():
+	layer_setup()
 	add_to_group("player")
 	add_to_group("hurtbox")
-	for n in [shape, camera, pause, inventory, health]:
+#	collision_layer = KFPS_CollisonLayerClass.layers["actor"
+#	] && KFPS_CollisonLayerClass.layers["terrain"] && KFPS_CollisonLayerClass.layers["damage"]
+	for n in [shape, camera, pause, inventory, ammobelt, health]:
 		add_child(n)
 
 func _process(_delta):

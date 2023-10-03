@@ -9,10 +9,18 @@ class_name KFPS_CharacterInventory
 var item_index:int = 0
 
 func add_item(item:KFPS_Item):
-	if !item.is_inside_tree():
-		add_child(item)
-	else:
-		item.reparent(self, false)
+	var already_held = false
+	for i in get_children():
+		if i.identification == item.identification:
+			already_held = true
+			i.quantity += 1
+			break
+	if !already_held:
+		if !item.is_inside_tree():
+			add_child(item)
+		else:
+			item.reparent(self, false)
+	item.pickup()
 
 func remove_item(item:KFPS_Item):
 	item.queue_free()

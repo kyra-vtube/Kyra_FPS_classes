@@ -21,7 +21,9 @@ var jumping:bool = false
 var crouching:bool = false
 
 ##The navigationAgent3D for this actor
-var nav:NavigationAgent3D
+var nav:NavigationAgent3D = NavigationAgent3D.new()
+
+var ammobelt:KFPS_Ammobelt = KFPS_Ammobelt.new()
 
 ##The navigation goal of this actor
 var navigation_goal:Vector3 = SILLY
@@ -49,9 +51,16 @@ var navigation_succesful:bool
 
 @export var walljump_enabled:bool = false
 
+var inventory:KFPS_CharacterInventory = KFPS_CharacterInventory.new()
+
+var health:KFPS_Health = KFPS_Health.new()
+
 func _ready():
-	nav = NavigationAgent3D.new()
-	add_child(nav)
+	collision_layer = KFPS_CollisonLayerClass.layers["actor"
+	] && KFPS_CollisonLayerClass.layers["terrain"] && KFPS_CollisonLayerClass.layers["damage"]
+	layer_setup()
+	for i in [nav, inventory, health]:
+		add_child(i)
 
 func _physics_process(delta):
 	get_collision_state()
@@ -120,3 +129,6 @@ func navigate():
 func clear_navigation():
 	navigation_goal = SILLY
 
+func layer_setup():
+	var layers:Dictionary = KFPS_CollisonLayerClass.layers
+	collision_layer = layers["terrain"] && layers["damage"] && layers["damage"] && layers["visibility"]

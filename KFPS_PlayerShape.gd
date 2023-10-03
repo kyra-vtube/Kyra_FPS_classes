@@ -27,5 +27,4 @@ func _physics_process(delta):
 	var height_target:float = second_shape_default
 	if get_parent().crouching:
 		height_target = position.y
-#	position.y = lerpf(position.y, height_target, delta * crouch_speed)
 	second_shape.position.y = lerpf(second_shape.position.y, height_target, delta * crouch_speed)
