@@ -15,7 +15,7 @@ func get_quantity(type:String)->int:
 
 func add_ammo(quantity:int, type:String = "10mm"):
 	if ammodict.get(type)!=null:
-		ammodict[type]+=quantity
+		ammodict[type] += quantity
 	else:
 		ammodict[type] = quantity
 

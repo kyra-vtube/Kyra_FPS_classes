@@ -29,7 +29,6 @@ signal on_destroyed(quantity:float)
 func get_health_percent() -> float:
 	return 1.0 - damage/max_health
 
-
 ##Damage function. Use inverse damage to heal
 func do_damage(quantity:float):
 	if quantity>0:

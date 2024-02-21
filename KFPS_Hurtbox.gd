@@ -1,4 +1,5 @@
 #By Kyra Gordon as part of KFPS
+@tool
 
 extends KFPS_EffectBox
 
@@ -7,11 +8,17 @@ class_name KFPS_Hurtbox
 
 signal on_hit(position:Vector3)
 
-@export var health:KFPS_Health
+var body:KFPS_Actor
 
 func _ready():
-	add_to_group("hurtbox")
+	var b = get_parent()
+	while !b is KFPS_Actor:
+		b = b.get_parent()
+	body = b
+	for i in 31:
+		set_collision_layer_value(i+1,false)
+	collision_layer = KFPS_CollisonLayerClass.layers["damage"]
 
-func damage(amount, point = Vector3(), angle = Vector3()):
-	health.do_damage(amount)
-	emit_signal("on_hit", point)
+func damage(d:KFPS_HitData):
+	body.health.do_damage(d.amount)
+	emit_signal("on_hit", d.point)
