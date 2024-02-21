@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnr2ww48utxlb"]
+
+[ext_resource type="PackedScene" uid="uid://2rr0afbupocg" path="res://KFPS-classes/example assets/test guy.blend" id="1_bux62"]
+
+[node name=" guy" instance=ExtResource("1_bux62")]
+
+[node name="Skeleton3D" parent="metarig" index="0"]
+bones/6/rotation = Quaternion(-0.240396, 0.535863, -0.62922, 0.509061)
+bones/10/rotation = Quaternion(-0.350419, -0.842921, 0.305322, 0.27105)
+bones/13/rotation = Quaternion(-0.991831, 0, 0, 0.127558)
+bones/17/rotation = Quaternion(0.92273, 0, 0, 0.385448)

@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://bqcr7gnpf4ya1"
+path="res://.godot/imported/scrape.sfxr-e6a94df450115be1187150ee29130705.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/scrape.sfxr"
+dest_files=["res://.godot/imported/scrape.sfxr-e6a94df450115be1187150ee29130705.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

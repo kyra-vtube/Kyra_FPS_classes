@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://y6oqbkboh5of"
+path="res://.godot/imported/crouchbreaking.sfxr-e6083e3550a611bc3a65fcd620fd2f4d.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/crouchbreaking.sfxr"
+dest_files=["res://.godot/imported/crouchbreaking.sfxr-e6083e3550a611bc3a65fcd620fd2f4d.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

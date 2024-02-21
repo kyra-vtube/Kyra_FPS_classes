@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://o7w08se8smgv"
+path="res://.godot/imported/crash.sfxr-88c7e1972d690ca03c54ef6f6948f172.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/crash.sfxr"
+dest_files=["res://.godot/imported/crash.sfxr-88c7e1972d690ca03c54ef6f6948f172.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

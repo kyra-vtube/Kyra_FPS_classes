@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://dnaman5l2wn32"
+path="res://.godot/imported/step.sfxr-4836a21ab2ed75bdbe3a3bdda3fea96f.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/step.sfxr"
+dest_files=["res://.godot/imported/step.sfxr-4836a21ab2ed75bdbe3a3bdda3fea96f.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

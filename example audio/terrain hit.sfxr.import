@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://coq476v8u7dko"
+path="res://.godot/imported/terrain hit.sfxr-2d462cfcca5d7a20d90fa877ff84d31f.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/terrain hit.sfxr"
+dest_files=["res://.godot/imported/terrain hit.sfxr-2d462cfcca5d7a20d90fa877ff84d31f.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://c6csq1n3anp3l"
+path="res://.godot/imported/jumpboost.sfxr-afcd021a6af435c8b3bf641fd2f2325d.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/jumpboost.sfxr"
+dest_files=["res://.godot/imported/jumpboost.sfxr-afcd021a6af435c8b3bf641fd2f2325d.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

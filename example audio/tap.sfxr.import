@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://dok42tidx6630"
+path="res://.godot/imported/tap.sfxr-02ffa337d679a55f4946a76b4a0e1cbc.sample"
+
+[deps]
+
+source_file="res://KFPS-classes/example audio/tap.sfxr"
+dest_files=["res://.godot/imported/tap.sfxr-02ffa337d679a55f4946a76b4a0e1cbc.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0
