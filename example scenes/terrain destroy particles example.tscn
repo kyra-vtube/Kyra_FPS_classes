@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqdvnkdhubucd"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cvjah"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 0)
+direction = Vector3(0, 0, -1)
+spread = 0.0
+flatness = 0.49
+initial_velocity_max = 10.0
+angular_velocity_min = -5.0
+angular_velocity_max = 5.0
+radial_accel_max = 29.11
+angle_min = -720.0
+angle_max = 720.0
+scale_min = 0.0
+scale_max = 1.5
+collision_mode = 1
+collision_friction = 0.1
+collision_bounce = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_urnhh"]
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="BoxMesh" id="BoxMesh_3syuk"]
+material = SubResource("StandardMaterial3D_urnhh")
+size = Vector3(0.3, 0.3, 0.1)
+
+[node name="KFPS_Particles" type="GPUParticles3D"]
+amount = 16
+lifetime = 7.0
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_cvjah")
+draw_pass_1 = SubResource("BoxMesh_3syuk")

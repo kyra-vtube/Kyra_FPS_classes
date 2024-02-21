@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://4hcl4n3hrtrg"]
+
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_AmmoPickup.gd" id="1_e8qes"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w1is5"]
+size = Vector3(1.1, 1.1, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nylwd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y74xw"]
+
+[node name="Ammo pickup example" type="RigidBody3D"]
+collision_layer = 0
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_e8qes")
+quantity = 1000
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_w1is5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+gi_mode = 2
+mesh = SubResource("BoxMesh_nylwd")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_y74xw")

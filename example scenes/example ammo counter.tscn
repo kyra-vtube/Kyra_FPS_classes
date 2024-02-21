@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgtcfy34dfdox"]
+
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_AmmoCounter.gd" id="1_v3q4c"]
+
+[node name="Ammo Counter" type="Control" node_paths=PackedStringArray("magazine", "stockpile")]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_v3q4c")
+magazine = NodePath("VBoxContainer/magazine_label")
+stockpile = NodePath("VBoxContainer/stockpile_label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="magazine_label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "10"
+
+[node name="stockpile_label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "100 10mm"

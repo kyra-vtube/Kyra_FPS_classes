@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b6xr8lgmxpn60"]
 
-[ext_resource type="Script" path="res://KFPS-classes/example scenes/test gun pickup scene.gd" id="1_itd74"]
+[ext_resource type="Script" path="res://KFPS-classes/example scripts/test gun pickup scene.gd" id="1_q1ggj"]
 [ext_resource type="Script" path="res://KFPS-classes/KFPS_Gunpickup.gd" id="2_lwxo4"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_46vay"]
@@ -14,7 +14,7 @@ size = Vector3(0.2, 0.2, 0.2)
 
 [node name="test gun pickup scene" type="RigidBody3D"]
 can_sleep = false
-script = ExtResource("1_itd74")
+script = ExtResource("1_q1ggj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_46vay")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://frnuef3hwghj"]
+
+[ext_resource type="Texture2D" uid="uid://bikq2hv4e77j1" path="res://icon.svg" id="1_sy5wc"]
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_Decal.gd" id="2_spa5r"]
+
+[node name="Decal" type="Decal"]
+size = Vector3(0.1, 0.1, 0.1)
+texture_albedo = ExtResource("1_sy5wc")
+script = ExtResource("2_spa5r")

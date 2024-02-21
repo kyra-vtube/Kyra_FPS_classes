@@ -1,9 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bw5d7k1qcy4va"]
+[gd_scene load_steps=12 format=3 uid="uid://4t3mbwo18da1"]
 
-[ext_resource type="Script" path="res://KFPS-classes/KFPS_Gun.gd" id="1_85kn4"]
-[ext_resource type="AudioStream" uid="uid://c2dqovtsiecln" path="res://KFPS-classes/example audio/shoot.sfxr" id="2_whte2"]
-[ext_resource type="AudioStream" uid="uid://ds5wrfxrqyjf2" path="res://KFPS-classes/example audio/empty.sfxr" id="3_sl7lj"]
-[ext_resource type="PackedScene" uid="uid://cgtcfy34dfdox" path="res://KFPS-classes/example scenes/example ammo counter.tscn" id="4_5jp6b"]
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_Gun.gd" id="1_bs5hr"]
+[ext_resource type="AudioStream" uid="uid://c2dqovtsiecln" path="res://KFPS-classes/example audio/shoot.sfxr" id="2_toji6"]
+[ext_resource type="AudioStream" uid="uid://ds5wrfxrqyjf2" path="res://KFPS-classes/example audio/empty.sfxr" id="3_tes7b"]
+[ext_resource type="PackedScene" uid="uid://cgtcfy34dfdox" path="res://KFPS-classes/example scenes/example ammo counter.tscn" id="4_jqaia"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fboy5"]
 
@@ -118,16 +118,18 @@ _data = {
 "rest": SubResource("Animation_8kqj5")
 }
 
-[node name="test gun" type="Node3D" node_paths=PackedStringArray("animator")]
-script = ExtResource("1_85kn4")
-shot_sound = ExtResource("2_whte2")
-empty_sound = ExtResource("3_sl7lj")
-mag_capacity = 100
+[node name="test shotgun" type="Node3D" node_paths=PackedStringArray("animator")]
+script = ExtResource("1_bs5hr")
+ROF = 2.0
+ammo_name = "12g"
+shot_sound = ExtResource("2_toji6")
+empty_sound = ExtResource("3_tes7b")
+mag_capacity = 6
+fire_script = "res://KFPS-classes/example scripts/multi hitscan attack example.gd"
 animator = NodePath("AnimationPlayer")
-automatic = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.294244, 0, 0, 0, 0.294244, 0, 0, 0, 0.294244, 0.365624, -0.366152, -0.88834)
+transform = Transform3D(0.255, 0, 0, 0, 0.255, 0, 0, 0, 1.39438, 0.365624, -0.366152, -0.88834)
 mesh = SubResource("BoxMesh_fboy5")
 surface_material_override/0 = SubResource("StandardMaterial3D_svem1")
 
@@ -136,4 +138,4 @@ libraries = {
 "": SubResource("AnimationLibrary_a0p4q")
 }
 
-[node name="Ammo Counter" parent="." instance=ExtResource("4_5jp6b")]
+[node name="Ammo Counter" parent="." instance=ExtResource("4_jqaia")]

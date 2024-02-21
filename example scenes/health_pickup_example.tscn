@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://da8u23yxkcaoj"]
+
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_HealthPickup.gd" id="1_0mhgm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w1is5"]
+size = Vector3(1.1, 1.1, 1.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nylwd"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y74xw"]
+
+[node name="Health pickup example" type="RigidBody3D"]
+collision_layer = 0
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_0mhgm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_w1is5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("BoxMesh_nylwd")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_y74xw")

@@ -1,0 +1,139 @@
+[gd_scene load_steps=15 format=3 uid="uid://dg2n63iy7jqc5"]
+
+[ext_resource type="Script" path="res://KFPS-classes/example scripts/Example particles.gd" id="1_lodgn"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_osxov"]
+direction = Vector3(0, 0, -1)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+angle_min = -720.0
+angle_max = 720.0
+collision_mode = 1
+collision_friction = 0.1
+collision_bounce = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etdsw"]
+shading_mode = 2
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_evhgu"]
+material = SubResource("StandardMaterial3D_etdsw")
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jyxhb"]
+transparency = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 16.0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qfwtk"]
+direction = Vector3(0, 0, -1)
+initial_velocity_min = 10.0
+initial_velocity_max = 100.0
+angular_velocity_max = 720.0
+radial_accel_min = -1.0
+radial_accel_max = 1.0
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_ubb6i"]
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n6fxv"]
+transparency = 4
+diffuse_mode = 2
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_q5qy6"]
+offsets = PackedFloat32Array(0, 0.495935, 1)
+colors = PackedColorArray(0.340339, 0.340339, 0.340339, 1, 0.404511, 0.404511, 0.404511, 0.745098, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ftala"]
+gradient = SubResource("Gradient_q5qy6")
+
+[sub_resource type="Curve" id="Curve_tdthq"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 2.56322, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dwex3"]
+curve = SubResource("Curve_tdthq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pbpx6"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, -1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 0, -1)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+angular_velocity_min = -180.0
+angular_velocity_max = 180.0
+angle_min = -720.0
+angle_max = 720.0
+scale_min = 2.0
+scale_max = 30.0
+scale_curve = SubResource("CurveTexture_dwex3")
+color_ramp = SubResource("GradientTexture1D_ftala")
+turbulence_enabled = true
+turbulence_noise_scale = 10.0
+turbulence_noise_speed = Vector3(5, 0, 5)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_x0yom"]
+
+[node name="Node3D" type="GPUParticles3D"]
+emitting = false
+amount = 16
+sub_emitter = NodePath("GPUParticles3D")
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_osxov")
+draw_pass_1 = SubResource("QuadMesh_evhgu")
+script = ExtResource("1_lodgn")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0352358)
+material_override = SubResource("StandardMaterial3D_jyxhb")
+emitting = false
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+trail_lifetime = 2.42
+process_material = SubResource("ParticleProcessMaterial_qfwtk")
+draw_pass_1 = SubResource("QuadMesh_ubb6i")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 10.0
+omni_range = 1.0
+
+[node name="dust_poof" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_n6fxv")
+emitting = false
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+collision_base_size = 2.0
+process_material = SubResource("ParticleProcessMaterial_pbpx6")
+draw_pass_1 = SubResource("QuadMesh_x0yom")

@@ -1,0 +1,27 @@
+[gd_scene load_steps=7 format=3 uid="uid://b41fsv372f1qx"]
+
+[ext_resource type="Script" path="res://KFPS-classes/KFPS_Rigidbody.gd" id="1_bn0vh"]
+[ext_resource type="AudioStream" uid="uid://coq476v8u7dko" path="res://KFPS-classes/example audio/terrain hit.sfxr" id="2_27qh7"]
+[ext_resource type="AudioStream" uid="uid://sjkolxitnxy2" path="res://KFPS-classes/example audio/idk.sfxr" id="3_btty8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ffemg"]
+friction = 0.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qxxn6"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_aswym"]
+
+[node name="KFPS_Rigidbody" type="RigidBody3D" node_paths=PackedStringArray("mesh")]
+physics_material_override = SubResource("PhysicsMaterial_ffemg")
+script = ExtResource("1_bn0vh")
+shoot_noise = ExtResource("2_27qh7")
+clank_noise = ExtResource("2_27qh7")
+scrape_noise = ExtResource("3_btty8")
+mesh = NodePath("CollisionShape3D/MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_qxxn6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CylinderMesh_aswym")
+skeleton = NodePath("../..")

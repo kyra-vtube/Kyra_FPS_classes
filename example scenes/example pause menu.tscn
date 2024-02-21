@@ -1,0 +1,118 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfe2chfdtuhq"]
+
+[ext_resource type="Script" path="res://KFPS-classes/example scripts/example pause menu.gd" id="1_q3plg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qsl85"]
+
+[node name="example pause menu" type="Panel"]
+custom_minimum_size = Vector2(640, 480)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q3plg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="resume" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "resume"
+
+[node name="_quit" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "quit"
+
+[node name="quit menu" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="quit menu"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -33.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="confirmation Label" type="Label" parent="quit menu/VBoxContainer"]
+layout_mode = 2
+text = "Click confirm to quit"
+horizontal_alignment = 1
+
+[node name="cancel" type="Button" parent="quit menu/VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "cancel
+"
+
+[node name="quit" type="Button" parent="quit menu/VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "confirm"
+
+[node name="death menu" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qsl85")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="death menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -30.5
+offset_right = 60.0
+offset_bottom = 30.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="you died label" type="Label" parent="death menu/VBoxContainer"]
+layout_mode = 2
+text = "you died"
+horizontal_alignment = 1
+
+[node name="quit" type="Button" parent="death menu/VBoxContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "confirm"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="VBoxContainer/resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="VBoxContainer/_quit" to="." method="_on__quit_pressed"]
+[connection signal="pressed" from="quit menu/VBoxContainer/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="quit menu/VBoxContainer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="death menu/VBoxContainer/quit" to="." method="_on_quit_pressed"]
